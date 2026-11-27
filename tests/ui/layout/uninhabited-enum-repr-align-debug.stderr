@@ -1,0 +1,24 @@
+error: layout_of(OneVariant) = Layout {
+           size: Size(0 bytes),
+           align: Align(4 bytes),
+           backend_repr: Memory {
+               sized: true,
+           },
+           fields: Primitive,
+           largest_niche: None,
+           uninhabited: true,
+           variants: Empty,
+           max_repr_align: Some(
+               Align(4 bytes),
+           ),
+           unadjusted_abi_align: Align(1 bytes),
+           repr_c: false,
+           randomization_seed: $SEED,
+       }
+  --> $DIR/uninhabited-enum-repr-align-debug.rs:12:1
+   |
+LL | enum OneVariant {
+   | ^^^^^^^^^^^^^^^
+
+error: aborting due to 1 previous error
+

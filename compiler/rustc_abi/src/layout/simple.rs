@@ -30,7 +30,6 @@ impl<FieldIdx: Idx, VariantIdx: Idx> LayoutData<FieldIdx, VariantIdx> {
     }
 
     pub fn never_type() -> Self {
-        // This is also used for uninhabited enums, so we use `Variants::Empty`.
         LayoutData {
             variants: Variants::Empty,
             fields: FieldsShape::Primitive,

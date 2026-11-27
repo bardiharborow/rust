@@ -1,0 +1,12 @@
+error[E0690]: transparent struct needs at most one non-trivial field, but has 2
+  --> $DIR/uninhabited-enum-repr-align-transparent.rs:13:1
+   |
+LL | struct Wrapper(u32, OneVariant);
+   | ^^^^^^^^^^^^^^ ---  ---------- this field requires alignment
+   | |              |
+   | |              this field has non-zero size
+   | needs at most one non-trivial field, but has 2
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0690`.

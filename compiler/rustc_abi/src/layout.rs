@@ -270,7 +270,9 @@ impl<Cx: HasDataLayout> LayoutCalculator<Cx> {
     ///
     /// As a consumer of `rustc_abi`, you should only use this method for non-ADTs.
     /// For structs and univariant enums, use [`Self::layout_of_struct`] instead
-    /// (it uses this function internally).
+    /// (it uses this function internally). The exception is enums whose variants are all
+    /// absent: there may be no variant to pass to [`Self::layout_of_struct`], and its only
+    /// extra step (hiding niches) is moot for an empty field list.
     pub fn layout_of_univariant<'a, FieldIdx, VariantIdx, F>(
         &self,
         fields: &IndexSlice<FieldIdx, F>,
@@ -366,7 +368,20 @@ impl<Cx: HasDataLayout> LayoutCalculator<Cx> {
             Some(present_first) => present_first,
             // Uninhabited because it has no variants, or only absent ones.
             None if is_enum => {
-                return Ok(LayoutData::never_type());
+                // Absent variants contribute nothing to the layout, so this is the layout of a
+                // fieldless struct with the same `repr`, except that it is uninhabited. Going
+                // through the struct path ensures every `repr` option (e.g. `align`) is respected.
+                let st = self.layout_of_univariant(
+                    IndexSlice::<FieldIdx, F>::empty(),
+                    repr,
+                    StructKind::AlwaysSized,
+                )?;
+                return Ok(LayoutData {
+                    variants: Variants::Empty,
+                    fields: FieldsShape::Primitive,
+                    uninhabited: true,
+                    ..st
+                });
             }
             // If it's a struct, still compute a layout so that we can still compute the
             // field offsets.
