@@ -26,7 +26,7 @@ LL | enum Es {}
    |
    = help: the `repr(simd)` attribute can only be applied to structs
 
-error[E0084]: unsupported representation for zero-variant enum
+error[E0084]: zero-variant enums do not currently support `#[repr]`
   --> $DIR/issue-83505-repr-simd.rs:5:8
    |
 LL | #[repr(simd)]
@@ -34,6 +34,8 @@ LL | #[repr(simd)]
 ...
 LL | enum Es {}
    | ------- zero-variant enum
+   |
+   = help: remove the `#[repr]` attribute, or add variants to the enum
 
 error: aborting due to 4 previous errors
 

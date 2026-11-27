@@ -4,7 +4,7 @@
 
 #[repr(simd)]
 //~^ ERROR: attribute cannot be used on
-//~| ERROR: unsupported representation for zero-variant enum [E0084]
+//~| ERROR: zero-variant enums do not currently support `#[repr]` [E0084]
 //~| ERROR: SIMD types are experimental and possibly buggy [E0658]
 
 enum Es {}

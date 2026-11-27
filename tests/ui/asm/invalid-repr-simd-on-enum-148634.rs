@@ -5,7 +5,7 @@ use std::arch::asm;
 
 #[repr(simd)]
 //~^ ERROR attribute cannot be used on
-//~| ERROR unsupported representation for zero-variant enum
+//~| ERROR zero-variant enums do not currently support `#[repr]`
 enum Es {}
 
 fn main() {

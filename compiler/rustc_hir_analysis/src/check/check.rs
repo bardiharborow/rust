@@ -1947,9 +1947,10 @@ fn check_enum(tcx: TyCtxt<'_>, def_id: LocalDefId) {
                 tcx.dcx(),
                 reprs.first().map(|repr| repr.1).unwrap_or(*first_span),
                 E0084,
-                "unsupported representation for zero-variant enum"
+                "zero-variant enums do not currently support `#[repr]`"
             )
             .with_span_label(tcx.def_span(def_id), "zero-variant enum")
+            .with_help("remove the `#[repr]` attribute, or add variants to the enum")
             .emit();
         });
     }

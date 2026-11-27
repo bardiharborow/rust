@@ -50,7 +50,7 @@ struct Generic<T>(T, T); //~ ERROR needs at most one non-trivial field
 #[repr(transparent)]
 struct GenericAndNonTrivial<T>(T, [i32; 0]); //~ ERROR needs at most one non-trivial field
 
-#[repr(transparent)] //~ ERROR unsupported representation for zero-variant enum
+#[repr(transparent)] //~ ERROR zero-variant enums do not currently support `#[repr]`
 enum Void {} //~ ERROR transparent enum needs exactly one variant, but has 0
 
 #[repr(transparent)]

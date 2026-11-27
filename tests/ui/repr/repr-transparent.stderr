@@ -52,13 +52,15 @@ LL | struct GenericAndNonTrivial<T>(T, [i32; 0]);
    | |                              this field is generic and hence may have non-zero size
    | needs at most one non-trivial field, but has 2
 
-error[E0084]: unsupported representation for zero-variant enum
+error[E0084]: zero-variant enums do not currently support `#[repr]`
   --> $DIR/repr-transparent.rs:53:8
    |
 LL | #[repr(transparent)]
    |        ^^^^^^^^^^^
 LL | enum Void {}
    | --------- zero-variant enum
+   |
+   = help: remove the `#[repr]` attribute, or add variants to the enum
 
 error[E0731]: transparent enum needs exactly one variant, but has 0
   --> $DIR/repr-transparent.rs:54:1
